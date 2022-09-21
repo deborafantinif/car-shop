@@ -10,7 +10,6 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async readOne(_id:string):Promise<T | null> {
-    if (_id.length < 24) throw new Error(ErrorTypes.HexadecimalLength);
     if (!isValidObjectId(_id)) throw Error(ErrorTypes.ObjectNotFound);
     return this._model.findOne({ _id });
   }
@@ -20,12 +19,14 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async update(_id:string, obj: T):Promise<T | null> {
-    if (!isValidObjectId(_id)) throw Error('Not found');
-    return this._model.findByIdAndUpdate(
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.HexadecimalLength);
+    const update = await this._model.findByIdAndUpdate(
       { _id },
       { ...obj } as UpdateQuery<T>,
       { new: true },
     );
+    if (!update) return null;
+    return update as T;
   }
 
   public async delete(_id:string):Promise<T | null> {

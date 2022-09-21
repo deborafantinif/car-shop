@@ -1,6 +1,7 @@
 export enum ErrorTypes {
   ObjectNotFound = 'ObjectNotFound',
   HexadecimalLength = 'HexadecimalLength',
+  EmptyObject = 'EmptyObject',
 }
 
 type ErrorResponseObject = { 
@@ -19,6 +20,10 @@ export const errorCatalog: ErrorCatalog = {
   },
   HexadecimalLength: {
     error: 'Id must have 24 hexadecimal characters',
+    httpStatus: 400,
+  },
+  EmptyObject: {
+    error: 'Object must not have empty',
     httpStatus: 400,
   },
 };

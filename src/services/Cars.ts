@@ -20,13 +20,23 @@ class CarsService implements IService<ICar> {
   }
   
   async readOne(_id: string): Promise<ICar | null> {
+    if (_id.length < 24) throw new Error(ErrorTypes.HexadecimalLength);
     const car = await this._cars.readOne(_id);
     if (!car) throw new Error(ErrorTypes.ObjectNotFound);
     return car;
   }
-  // update(_id: string, obj: ICar): Promise<ICar | null> {
-  //   throw new Error('Method not implemented.');
-  // }
+
+  async update(_id: string, obj: ICar): Promise<ICar | null> {
+    const parsed = CarZodSchema.safeParse(obj);
+    if (!parsed.success) {
+      throw parsed.error;
+    }
+
+    const updatedCar = await this._cars.update(_id, parsed.data);
+    if (!updatedCar) throw new Error(ErrorTypes.ObjectNotFound);
+
+    return updatedCar;
+  }
   // delete(_id: string): Promise<ICar | null> {
   //   throw new Error('Method not implemented.');
   // }
