@@ -1,4 +1,5 @@
 import { isValidObjectId, Model, UpdateQuery } from 'mongoose';
+import { ErrorTypes } from '../errors/catalog';
 import { IModel } from '../interfaces/IModel';
 
 abstract class MongoModel<T> implements IModel<T> {
@@ -9,7 +10,8 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async readOne(_id:string):Promise<T | null> {
-    if (!isValidObjectId(_id)) throw Error('Not found this');
+    if (_id.length < 24) throw new Error(ErrorTypes.HexadecimalLength);
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.ObjectNotFound);
     return this._model.findOne({ _id });
   }
 

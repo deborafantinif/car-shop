@@ -14,6 +14,11 @@ class CarsController {
     const cars = await this._service.read();
     res.json(cars);
   }
+
+  async readOne(req: Request, res: Response) {
+    const cars = await this._service.readOne(req.params.id);
+    res.json(cars);
+  }
 }
 
 export default CarsController;
