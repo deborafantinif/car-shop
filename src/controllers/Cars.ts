@@ -6,8 +6,13 @@ class CarsController {
   constructor(private _service:IService<ICar>) {}
 
   async create(req: Request, res: Response) {
-    const newCar = this._service.create(req.body);
+    const newCar = await this._service.create(req.body);
     res.status(201).json(newCar);
+  }
+
+  async read(_req: Request, res: Response) {
+    const cars = await this._service.read();
+    res.json(cars);
   }
 }
 

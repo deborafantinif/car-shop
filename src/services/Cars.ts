@@ -9,12 +9,14 @@ class CarsService implements IService<ICar> {
     const parsed = CarZodSchema.safeParse(obj);
     if (!parsed.success) throw parsed.error;
 
-    const newCar = this._cars.create(parsed.data);
+    const newCar = await this._cars.create(parsed.data);
     return newCar;
   }
-  // read(): Promise<ICar[]> {
-  //   throw new Error('Method not implemented.');
-  // }
+
+  async read(): Promise<ICar[]> {
+    const cars = await this._cars.read();
+    return cars;
+  }
   // readOne(_id: string): Promise<ICar | null> {
   //   throw new Error('Method not implemented.');
   // }

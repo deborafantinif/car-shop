@@ -5,7 +5,7 @@ abstract class MongoModel<T> implements IModel<T> {
   constructor(protected _model:Model<T>) {}
 
   public async read():Promise<T[]> {
-    return this._model.find();
+    return this._model.find({});
   }
 
   public async readOne(_id:string):Promise<T | null> {
