@@ -1,9 +1,11 @@
 import { z } from 'zod';
-import { IVehicle } from './IVehicle';
+import { VehicleZodSchema } from './IVehicle';
 
-const CarZodSchema = z.object({
-  doorsQty: z.number().positive().gte(2).lte(4),
-  seatsQty: z.number().positive().gte(2).lte(7),
+export const CarZodSchema = VehicleZodSchema.extend({
+  doorsQty: z.number().positive()
+    .gte(2, { message: 'DoorsQty must be 2 or more characters long' }).lte(4),
+  seatsQty: z.number().positive()
+    .gte(2, { message: 'SeatsQty must be 2 or more characters long' }).lte(7),
 });
 
-export type ICar = IVehicle & z.infer<typeof CarZodSchema>;
+export type ICar = z.infer<typeof CarZodSchema>;
