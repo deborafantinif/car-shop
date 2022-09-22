@@ -14,6 +14,7 @@ describe('Cars Service', () => {
 	before(() => {
 		sinon.stub(carsModel, 'create').resolves(carsMockWithId);
 		sinon.stub(carsModel, 'read').resolves(listCarsMock);
+		sinon.stub(carsModel, 'delete');
 		sinon.stub(carsModel, 'readOne')
 			.onCall(0).resolves(carsMockWithId) 
 			.onCall(1).resolves(null); 
@@ -65,6 +66,26 @@ describe('Cars Service', () => {
 
 			expect(error, 'error should be defined').not.to.be.undefined;
 			expect(error.message).to.be.deep.equal(ErrorTypes.HexadecimalLength);
+		});
+	});
+
+	describe('Delete Car', () => {
+		// it('Success', async () => {
+		// 	const carOne = await carsService.delete('3hhjuioioioiklohytrfderf');
+
+		// 	expect(carOne).to.be.deep.equal(null);
+		// });
+
+		it('Failure', async () => {
+      let error: any;
+			try {
+				await carsService.delete('frameMockWithId._id');
+			} catch (err:any) {
+				error = err
+			}
+
+			expect(error, 'error should be defined').not.to.be.undefined;
+			expect(error.message).to.be.deep.equal(ErrorTypes.ObjectNotFound);
 		});
 	});
 });
