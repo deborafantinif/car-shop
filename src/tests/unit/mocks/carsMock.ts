@@ -9,8 +9,8 @@ const carsMock: ICar = {
   seatsQty: 5,
 }
 
-const carsMockWithId: ICar & { _id:number } = {
-  _id: 3,
+const carsMockWithId: ICar & { _id:string } = {
+  _id: '3hhjuioioioiklohytrfderf',
   model: 'new',
   year: 2003,
   color: 'blue',

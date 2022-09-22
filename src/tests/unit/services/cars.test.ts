@@ -50,7 +50,7 @@ describe('Cars Service', () => {
 
 	describe('ReadOne Car', () => {
 		it('Success', async () => {
-			const carOne = await carsService.readOne('carsMockWithId._id');
+			const carOne = await carsService.readOne(carsMockWithId._id);
 
 			expect(carOne).to.be.deep.equal(carsMockWithId);
 		});
@@ -58,14 +58,13 @@ describe('Cars Service', () => {
 		it('Failure', async () => {
       let error: any;
 			try {
-        // a mesma chamada que o teste acima aqui vai gerar o erro por causa do nosso sinon.stub(...).onCall(1)
 				await carsService.readOne('frameMockWithId._id');
 			} catch (err:any) {
 				error = err
 			}
 
 			expect(error, 'error should be defined').not.to.be.undefined;
-			expect(error.message).to.be.deep.equal(ErrorTypes.ObjectNotFound);
+			expect(error.message).to.be.deep.equal(ErrorTypes.HexadecimalLength);
 		});
 	});
 });
