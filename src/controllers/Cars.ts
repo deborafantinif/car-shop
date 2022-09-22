@@ -24,6 +24,11 @@ class CarsController {
     const updateCar = await this._service.update(req.params.id, req.body);
     res.json(updateCar);
   }
+
+  async delete(req: Request, res: Response) {
+    const deleteCar = await this._service.delete(req.params.id);
+    res.status(204).json(deleteCar);
+  }
 }
 
 export default CarsController;

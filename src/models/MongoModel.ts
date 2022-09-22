@@ -30,7 +30,7 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async delete(_id:string):Promise<T | null> {
-    if (!isValidObjectId(_id)) throw Error('Not found this');
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.HexadecimalLength);
     return this._model.remove({ _id });
   }
 }

@@ -37,9 +37,13 @@ class CarsService implements IService<ICar> {
 
     return updatedCar;
   }
-  // delete(_id: string): Promise<ICar | null> {
-  //   throw new Error('Method not implemented.');
-  // }
+
+  async delete(_id: string): Promise<ICar | null> {
+    const deleteCar = await this._cars.delete(_id);
+    console.log(deleteCar);
+    if (!deleteCar) throw new Error(ErrorTypes.ObjectNotFound);
+    return null;
+  }
 }
 
 export default CarsService;
